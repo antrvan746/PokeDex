@@ -4,16 +4,16 @@ import (
 	"fmt"
 )
 
-func commandHelp() error {
+func commandHelp(cfg *config) error {
 	fmt.Println()
 	fmt.Println()
 	fmt.Println("Welcome to PokeDex")
 	fmt.Println("Usage: ")
 	fmt.Println()
-	fmt.Println("hello: Displays a help message")
-	fmt.Println("exit: Exit the PokeDex")
+	for _, cmd := range getCommands() {
+		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
+	}
 	fmt.Println()
 	fmt.Println()
-	
 	return nil
 }

@@ -6,7 +6,7 @@ import (
 	"errors"
 )
 
-func commandExit() error {
+func commandExit(cfg *config) error {
 	fmt.Println("Exiting the app...")
 	os.Exit(0)
 
