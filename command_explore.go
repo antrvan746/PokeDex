@@ -5,10 +5,8 @@ import (
 	"fmt"
 )
 
-
 func commandExplore(cfg *config, args ...string) error {
 	if len(args) != 1 {
-		fmt.Println(args)
 		return errors.New("you must provide a location name")
 	}
 

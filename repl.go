@@ -10,47 +10,57 @@ import (
 )
 
 type config struct {
-	pokeapiClient pokeapi.Client
+	pokeapiClient    pokeapi.Client
+	caughtPokemon map[string]pokeapi.Pokemon
 	nextLocationsURL *string
 	prevLocationsURL *string
 }
 
 type cliCommand struct {
-	name string
+	name        string
 	description string
-	callback func(cfg *config, args ...string) error
+	callback    func(cfg *config, args ...string) error
 }
 
-func getCommands() map[string] cliCommand {
+func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
-			name: "help",
+			name:        "help",
 			description: "Displays a help message",
-			callback: commandHelp,
+			callback:    commandHelp,
 		},
 		"exit": {
-			name: "exit",
+			name:        "exit",
 			description: "Exit the PokeDex",
-			callback: commandExit,
+			callback:    commandExit,
 		},
 		"map": {
-			name: "map",
+			name:        "map",
 			description: "Get the next page of locations",
-			callback: commandMapForward,
+			callback:    commandMapForward,
 		},
 		"mapb": {
-			name: "mapb",
+			name:        "mapb",
 			description: "Get the previous page of locations",
-			callback: commandMapBack,
+			callback:    commandMapBack,
 		},
 		"explore": {
-			name: "explore <location_name>",
+			name:        "explore <location_name>",
 			description: "Explore a location",
-			callback: commandExplore,
+			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch <pokemon_name>",
+			description: "Catch a pokemon",
+			callback:    commandCatch,
+		},
+		"pets": {
+			name: "pets",
+			description: "View caught pokemons of pokedex user",
+			callback: commandViewPets,
 		},
 	}
 }
-
 
 func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -67,8 +77,8 @@ func startRepl(cfg *config) {
 		if len(words) > 1 {
 			args = words[1:]
 		}
-		
-		command, ok := getCommands()[commandName]; 
+
+		command, ok := getCommands()[commandName]
 		if ok {
 			err := command.callback(cfg, args...)
 			if err != nil {
@@ -86,4 +96,3 @@ func cleanInput(input string) []string {
 	words := strings.Fields(input)
 	return words
 }
-

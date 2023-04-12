@@ -23,14 +23,13 @@ func (c *Client) GetALocation(locationName string) (Location, error) {
 		return locationResp, nil
 	}
 
-
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return Location{}, err
 	}
 
 	resq, err := c.httpClient.Do(req)
-	if  err != nil {
+	if err != nil {
 		return Location{}, err
 	}
 
@@ -48,6 +47,6 @@ func (c *Client) GetALocation(locationName string) (Location, error) {
 	}
 
 	c.cache.Add(url, dat)
-	
+
 	return location, nil
 }

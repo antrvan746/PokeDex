@@ -9,7 +9,7 @@ import (
 func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 	url := baseURL + "/location-area"
 
-	if (pageURL != nil) {
+	if pageURL != nil {
 		url = *pageURL
 	}
 
@@ -24,7 +24,6 @@ func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 		return locationsResp, nil
 	}
 
-
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return RespShallowLocations{}, err
@@ -36,7 +35,6 @@ func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 	}
 
 	defer resp.Body.Close()
-
 
 	dat, err := io.ReadAll(resp.Body)
 	if err != nil {

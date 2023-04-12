@@ -15,7 +15,6 @@ func commandMapForward(cfg *config, args ...string) error {
 	cfg.nextLocationsURL = locationResp.Next
 	cfg.prevLocationsURL = locationResp.Previous
 
-
 	for _, location := range locationResp.Results {
 		fmt.Println(location.Name)
 	}
@@ -28,7 +27,6 @@ func commandMapBack(cfg *config, args ...string) error {
 		return errors.New("you're on the first page")
 	}
 
-
 	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.prevLocationsURL)
 
 	if err != nil {
@@ -38,12 +36,9 @@ func commandMapBack(cfg *config, args ...string) error {
 	cfg.nextLocationsURL = locationResp.Next
 	cfg.prevLocationsURL = locationResp.Previous
 
-
 	for _, location := range locationResp.Results {
 		fmt.Println(location.Name)
 	}
 
 	return nil
 }
-
-
